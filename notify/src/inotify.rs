@@ -473,13 +473,7 @@ impl EventLoop {
         is_recursive: bool,
         watch_self: bool,
     ) -> Result<()> {
-        let mut watchmask = WatchMask::ATTRIB
-            | WatchMask::CREATE
-            | WatchMask::DELETE
-            | WatchMask::CLOSE_WRITE
-            | WatchMask::MODIFY
-            | WatchMask::MOVED_FROM
-            | WatchMask::MOVED_TO;
+        let mut watchmask = WatchMask::ALL_EVENTS;
 
         if watch_self {
             watchmask.insert(WatchMask::DELETE_SELF);
