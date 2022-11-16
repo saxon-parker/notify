@@ -15,7 +15,7 @@ use winapi::um::synchapi;
 use winapi::um::winbase::{self, INFINITE, WAIT_OBJECT_0};
 use winapi::um::winnt::{self, FILE_NOTIFY_INFORMATION, HANDLE};
 
-use crate::{bounded, unbounded, BoundSender, Receiver, Sender, Config};
+use crate::{bounded, unbounded, BoundSender, Config, Receiver, Sender};
 use crate::{event::*, WatcherKind};
 use crate::{Error, EventHandler, RecursiveMode, Result, Watcher};
 use std::collections::HashMap;
@@ -264,7 +264,8 @@ fn start_read(rd: &ReadData, event_handler: Arc<Mutex<dyn EventHandler>>, handle
         | winnt::FILE_NOTIFY_CHANGE_SIZE
         | winnt::FILE_NOTIFY_CHANGE_LAST_WRITE
         | winnt::FILE_NOTIFY_CHANGE_CREATION
-        | winnt::FILE_NOTIFY_CHANGE_SECURITY;
+        | winnt::FILE_NOTIFY_CHANGE_SECURITY
+        | winnt::FILE_NOTIFY_CHANGE_LAST_ACCESS;
 
     let monitor_subdir = if (&request.data.file).is_none() && request.data.is_recursive {
         1
